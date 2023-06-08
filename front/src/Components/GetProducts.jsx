@@ -4,7 +4,7 @@ import ProductsList from "./ProductsList";
 //import classes from "./Products.module.css";
 import classes from "../styles/main.module.css"
 import {Link} from "react-router-dom";
-
+//get products
 const GetProducts = function () {
     const [products, setProducts] = useState([]);
     useEffect(()=> {
@@ -23,7 +23,7 @@ const GetProducts = function () {
             });
     }
 
-
+// set id to delete
     const setIdToDelete = (id) => {
         if(ids.includes(id)) {
             setIds(ids.replace(id + ',', ''));
