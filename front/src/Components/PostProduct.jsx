@@ -29,7 +29,7 @@ import {useForm} from "react-hook-form";
 
 
 
-
+//check exist sku
          const [skuL,setSku]=useState([]);
          useEffect(()=>{
              axios.get(`http://188.92.78.91:8080/skulist`)
@@ -41,7 +41,7 @@ import {useForm} from "react-hook-form";
          return skuL.includes(sku);
      }
      const navigate = useNavigate();
-
+    //add product
      function postProducts(data) {
 
 
