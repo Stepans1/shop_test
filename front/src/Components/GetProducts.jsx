@@ -51,7 +51,7 @@ return (
                 <ProductsList key={product.id} id={product.id} name={product.name} sku={product.sku} price={product.price} productType={product.productType} dimension={product.dimension} size={product.size} weight={product.weight} onChange={() => setIdToDelete(product.id)}/>
                 )
                 :
-                <p>asd</p>
+                <p>Product list is empty</p>
             }
         </div>
     </div>
