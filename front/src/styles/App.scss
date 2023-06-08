@@ -1,0 +1,18 @@
+$margin:0;
+$display:flex;
+
+* {
+  margin: $margin;
+  padding: $margin;
+  box-sizing: border-box;
+}
+
+#root {
+  display: $display;
+  justify-content: center;
+}
+
+.App {
+  width: 70%;
+  margin: 0 auto;
+}
