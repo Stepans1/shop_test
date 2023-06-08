@@ -14,7 +14,7 @@ const GetProducts = function () {
             });
 
     });
-
+// delete selected element(mass delete)
     const [ids, setIds] = useState('');
     function deleteProducts() {
         axios.delete(`http://188.92.78.91:8080/${ids}`)
