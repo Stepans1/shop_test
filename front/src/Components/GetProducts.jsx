@@ -4,22 +4,29 @@ import ProductsList from "./ProductsList";
 //import classes from "./Products.module.css";
 import classes from "../styles/main.module.css"
 import {Link} from "react-router-dom";
+import {useContext} from "react";
+import {Loading} from "../context";
 //get products
 const GetProducts = function () {
+    const {loading} = useContext(Loading);
     const [products, setProducts] = useState([]);
-    useEffect(()=> {
+    function selectProducts(){
         axios.get('http://188.92.78.91:8080/')
             .then(response => {
                 setProducts(response.data);
             });
+    }
 
-    });
+    useEffect(()=> {
+        selectProducts();
+
+    },[loading]);
 // delete selected element(mass delete)
     const [ids, setIds] = useState('');
     function deleteProducts() {
         axios.delete(`http://188.92.78.91:8080/${ids}`)
             .then(response => {
-                return response;
+               selectProducts();
             });
     }
 

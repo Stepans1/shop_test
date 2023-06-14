@@ -2,8 +2,10 @@ import React, {useEffect, useState} from 'react';
 import axios from "axios";
 
 import classes from "../styles/main.module.css"
-import {isRouteErrorResponse, Link, useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useForm} from "react-hook-form";
+import {useContext} from "react";
+import {Loading} from "../context";
 
 
 
@@ -11,10 +13,12 @@ import {useForm} from "react-hook-form";
 
  const PostProduct = () => {
 
+     const {setLoading} = useContext(Loading);
+
      const {
              register,
              watch,
-             formState:{errors},
+             formState:{errors,isValid},
              handleSubmit
          }=useForm({
              mode:"onBlur",
@@ -31,34 +35,49 @@ import {useForm} from "react-hook-form";
 
 //check exist sku
          const [skuL,setSku]=useState([]);
-         useEffect(()=>{
+
+         function getSkuList(){
              axios.get(`http://188.92.78.91:8080/skulist`)
                  .then(response => {
                      setSku(response.data);
                  });
-         });
+         }
+
+         useEffect(()=>{
+             getSkuList();
+         }, []);
      function skuValidation(sku) {
          return skuL.includes(sku);
      }
      const navigate = useNavigate();
     //add product
-     function postProducts(data) {
+     async function postProducts(data) {
+        await getSkuList();
+        if(skuValidation(data.sku) === true){
+            // alert('pizda');
+
+        } else {
+            setLoading(true);
+            axios.post(`http://188.92.78.91:8080/`, data)
+                .then(() => {
+                    setLoading(false);
+                });
+            navigate("/");
+        }
 
 
-         axios.post(`http://188.92.78.91:8080/`, data)
-             .then(response => {
-                 return response;
-             });
-         navigate("/");
+
      }
 
      return (
+
          <form id="product_form" onSubmit={handleSubmit(onSubmit)}>
+
              <div>
                  <header>
                      <h1>Product Add</h1>
                      <div className={classes.buttons}>
-                         <button  type="submit" >Save</button>
+                         <button onClick={skuValidation}  type="submit" >Save</button>
                          &nbsp;&nbsp;&nbsp;
                          <button><Link to='/'>Cancel</Link></button>
 
@@ -243,6 +262,7 @@ import {useForm} from "react-hook-form";
 
              </div>
          </form>
+
      );
  };
 
