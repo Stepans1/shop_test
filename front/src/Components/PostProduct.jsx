@@ -54,7 +54,7 @@ import {Loading} from "../context";
      async function postProducts(data) {
         await getSkuList();
         if(skuValidation(data.sku) === true){
-            // alert('pizda');
+         
 
         } else {
             setLoading(true);
