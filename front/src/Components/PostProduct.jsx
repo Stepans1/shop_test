@@ -37,7 +37,7 @@ import {Loading} from "../context";
          const [skuL,setSku]=useState([]);
 
          function getSkuList(){
-             axios.get(`http://188.92.78.91:8080/skulist`)
+             axios.get(`http://localhost/revork/back-end/public/sku`)
                  .then(response => {
                      setSku(response.data);
                  });
@@ -58,7 +58,7 @@ import {Loading} from "../context";
 
         } else {
             setLoading(true);
-            axios.post(`http://188.92.78.91:8080/`, data)
+            axios.post(`http://localhost/revork/back-end/public/save`, data)
                 .then(() => {
                     setLoading(false);
                 });
@@ -187,76 +187,76 @@ import {Loading} from "../context";
                              </div>
                          </div>
 
-                     ) : watch('productType') === 'DVD' ? (
-                         <div>
-                             <label>Size </label>
-                             <input
-                                 {...register("size", {
-                                     required: true,
-                                     pattern: {
-                                         value: /^(0|[1-9]\d*)(\.\d+)?$/,
-                                         message: 'Please, provide the data of indicated type'
-                                     }
-                                 })}
-                                 id='size'
-
-                                 placeholder="Please, provide size"
-                             />
-                             <div>
-                                 {errors?.size && <p> {errors?.size?.message || "Please, submit required data"} </p>}
-                             </div>
-                         </div>
-                     ) : watch('productType') === 'Furniture' ? (
-                         <p>
-                             <label>Height (CM)&nbsp;</label>
-                             <input
-                                 {...register("height", {
-                                     required: "Please, submit required data",
-                                     pattern: {
-                                         value: /^(0|[1-9]\d*)(\.\d+)?$/,
-                                         message: 'Please, provide the data of indicated type'
-                                     }
-                                 })}
-                                 id='height'
-
-                                 placeholder="Please, provide height"
-                             />
-                             <div>
-                             {errors?.height && <p> {errors?.height?.message || "Error!"} </p>}
-                             </div><br/>
-                             <label>Width (CM)&nbsp;&nbsp;</label>
-                             <input
-                                 {...register("width", {
-                                     required: "Please, submit required data",
-                                     pattern: {
-                                         value: /^(0|[1-9]\d*)(\.\d+)?$/,
-                                         message: 'Please, provide the data of indicated type'
-                                     }
-                                 })}
-                                 id='width'
-
-                                 placeholder="Please, provide width"
-                             />
-                             <div>
-                             {errors?.width && <p> {errors?.width?.message || "Error!"} </p>}
-                             </div><br/>
-                             <label>Length (CM)&nbsp;</label>
-                             <input
-                                 {...register("length", {
-                                     required: "Please, submit required data",
-                                     pattern: {
-                                         value: /^(0|[1-9]\d*)(\.\d+)?$/,
-                                         message: 'Please, provide the data of indicated type'
-                                     }
-                                 })}
-                                 id='length'
-
-                                 placeholder="Please, provide length"
-                             />
-                             <div>
-                                 {errors?.length && <p> {errors?.length?.message || "Error!"} </p>}
-                             </div>
-                         </p>
+                     // ) : watch('productType') === 'DVD' ? (
+                     //     <div>
+                     //         <label>Size </label>
+                     //         <input
+                     //             {...register("size", {
+                     //                 required: true,
+                     //                 pattern: {
+                     //                     value: /^(0|[1-9]\d*)(\.\d+)?$/,
+                     //                     message: 'Please, provide the data of indicated type'
+                     //                 }
+                     //             })}
+                     //             id='size'
+                     //
+                     //             placeholder="Please, provide size"
+                     //         />
+                     //         <div>
+                     //             {errors?.size && <p> {errors?.size?.message || "Please, submit required data"} </p>}
+                     //         </div>
+                     //     </div>
+                     // ) : watch('productType') === 'Furniture' ? (
+                     //     <p>
+                     //         <label>Height (CM)&nbsp;</label>
+                     //         <input
+                     //             {...register("height", {
+                     //                 required: "Please, submit required data",
+                     //                 pattern: {
+                     //                     value: /^(0|[1-9]\d*)(\.\d+)?$/,
+                     //                     message: 'Please, provide the data of indicated type'
+                     //                 }
+                     //             })}
+                     //             id='height'
+                     //
+                     //             placeholder="Please, provide height"
+                     //         />
+                     //         <div>
+                     //         {errors?.height && <p> {errors?.height?.message || "Error!"} </p>}
+                     //         </div><br/>
+                     //         <label>Width (CM)&nbsp;&nbsp;</label>
+                     //         <input
+                     //             {...register("width", {
+                     //                 required: "Please, submit required data",
+                     //                 pattern: {
+                     //                     value: /^(0|[1-9]\d*)(\.\d+)?$/,
+                     //                     message: 'Please, provide the data of indicated type'
+                     //                 }
+                     //             })}
+                     //             id='width'
+                     //
+                     //             placeholder="Please, provide width"
+                     //         />
+                     //         <div>
+                     //         {errors?.width && <p> {errors?.width?.message || "Error!"} </p>}
+                     //         </div><br/>
+                     //         <label>Length (CM)&nbsp;</label>
+                     //         <input
+                     //             {...register("length", {
+                     //                 required: "Please, submit required data",
+                     //                 pattern: {
+                     //                     value: /^(0|[1-9]\d*)(\.\d+)?$/,
+                     //                     message: 'Please, provide the data of indicated type'
+                     //                 }
+                     //             })}
+                     //             id='length'
+                     //
+                     //             placeholder="Please, provide length"
+                     //         />
+                     //         <div>
+                     //             {errors?.length && <p> {errors?.length?.message || "Error!"} </p>}
+                     //         </div>
+                     //     </p>
                      ) : (<p></p>)
                  }
 

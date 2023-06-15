@@ -3,7 +3,7 @@ import classes from "../styles/main.module.css"
 
 
 
-const ProductsList = ({id,name,sku,price,productType,dimension,size,weight,...props}) => {
+const ProductsList = ({id,name,sku,price,productType,spec,...props}) => {
     if (id != null) {
         return (
 
@@ -11,9 +11,10 @@ const ProductsList = ({id,name,sku,price,productType,dimension,size,weight,...pr
                 <input className='delete-checkbox' type="checkbox" {...props} />
                 <h5>{sku}</h5>
                 <p>{name}</p>
-                <p>{price}</p>
-                <p>{productType}</p>
-                <p>{dimension}{size}{weight}</p>
+                <p>{price} $</p>
+                {/*<p>{productType}</p>*/}
+                <p>{spec}</p>
+                {/*<p>{dimension}{size}{weight}</p>*/}
                 {/*<button onClick={deleteProduct}>Delete</button>*/}
 
             </div>
