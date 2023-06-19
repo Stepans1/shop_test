@@ -49,7 +49,7 @@ import FurnitureElement from "./FurnitureElement";
         //check exist sku
          const [skuL,setSku]=useState([]);
          function getSkuList(){
-             axios.get(`http://localhost/FINALA/back_end/public/sku`)
+             axios.get(`http://188.92.78.91:8080/sku`)
                  .then(response => {
                      setSku(response.data);
                  });
@@ -70,7 +70,7 @@ import FurnitureElement from "./FurnitureElement";
 
         } else {
             setLoading(true);
-            axios.post(`http://localhost/FINALA/back_end/public/add`, data)
+            axios.post(`http://188.92.78.91:8080/add`, data)
                 .then(() => {
                     setLoading(false);
                 });
