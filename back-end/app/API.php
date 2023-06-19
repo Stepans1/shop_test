@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\models\Product;
 use App\repository\productRepository;
 
 class API
@@ -14,7 +13,7 @@ class API
         $this->method = $_SERVER['REQUEST_METHOD'];
     }
 
-    public function start()
+    public function start(): void
     {
         switch ($this->method)
         {
@@ -22,43 +21,33 @@ class API
                 $productRepository = new productRepository();
 
                 if(isset($_GET['q']) && $_GET['q'] === "sku") {
-                    $skuList = $productRepository->getAllSku();
+                    $skuList = $productRepository->getAllSkuList();
                     echo json_encode($skuList);
                 } else {
                     $products = $productRepository->getAllProducts();
                     echo json_encode($products);
                 }
                 break;
-//            case "POST":
-//                $request_body=file_get_contents('php://input');
-//                $data=json_decode($request_body,true);
-//                 break;
             case "POST":
                 $request_body = file_get_contents('php://input');
+                $data = json_decode($request_body, true);
 
-                $productRepository = new productRepository();
-                if($_GET['q'] === "save") {
-                    $data = json_decode($request_body, true);
-
-                    $skuList = $productRepository->getAllSku();
+                $productRepository = new ProductRepository();
+                if($_GET['q'] === "add") {
+                    $skuList = $productRepository->getAllSkuList();
                     if(in_array($data['sku'], $skuList)) {
+
                         echo "sku exists";
                     } else {
                         $productRepository->addProduct($data);
                         echo "success";
                     }
                 } else if ($_GET['q'] === "delete") {
-                    $data = $request_body;
 
-                    $arr = explode(',', $data);
-                    $productRepository->deleteProducts($arr);
+                    $productRepository->deleteProducts($data);
                     break;
                 }
                 break;
-
-            case "DELETE":
-                $del = $_GET['q'];
-                $array = explode(',',$del);
         }
     }
 

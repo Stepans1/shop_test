@@ -11,7 +11,7 @@ const GetProducts = function () {
     const {loading} = useContext(Loading);
     const [products, setProducts] = useState([]);
     function selectProducts(){
-        axios.get('http://localhost/revork/back-end/public/')
+        axios.get('http://localhost/sand_box/public/')
             .then(response => {
                 setProducts(response.data);
             });
@@ -22,10 +22,12 @@ const GetProducts = function () {
 
     },[loading]);
 // delete selected element(mass delete)
-    const [ids, setIds] = useState('');
+    const [ids, setIds] = useState([]);
     function deleteProducts() {
-        axios.delete(`http://188.92.78.91:8080/${ids}`)
+        axios.post(`http://localhost/sand_box/public/delete` ,ids)
             .then(response => {
+
+               setIds([]);
                selectProducts();
             });
     }
@@ -33,9 +35,9 @@ const GetProducts = function () {
 // set id to delete
     const setIdToDelete = (id) => {
         if(ids.includes(id)) {
-            setIds(ids.replace(id + ',', ''));
+            setIds(ids.filter(item => item !== id));
         } else {
-            setIds(ids + id + ',');
+            setIds([...ids,id]);
         }
     }
 
@@ -55,7 +57,7 @@ return (
         <div className={classes.productList}>
             {products.length ?
             products.map((product) =>
-                <ProductsList key={product.id}   id={product.id} name={product.name} sku={product.sku} price={product.price} productType={product.productType} spec={product.specialAtribut}  onChange={() => setIdToDelete(product.id)}/>
+                <ProductsList key={product.id}   id={product.id} name={product.name} sku={product.sku} price={product.price} productType={product.productType} spec={product.specialField}  onChange={() => setIdToDelete(product.id)}/>
                 )
                 :
                 <p>Product list is empty</p>

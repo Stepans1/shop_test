@@ -11,7 +11,7 @@ const ProductsList = ({id,name,sku,price,productType,spec,...props}) => {
                 <input className='delete-checkbox' type="checkbox" {...props} />
                 <h5>{sku}</h5>
                 <p>{name}</p>
-                <p>{price} $</p>
+                <p>{price} </p>
                 {/*<p>{productType}</p>*/}
                 <p>{spec}</p>
                 {/*<p>{dimension}{size}{weight}</p>*/}

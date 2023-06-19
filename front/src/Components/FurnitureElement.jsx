@@ -1,11 +1,11 @@
 import React from 'react';
 
-const AddBook = () => {
+const FurnitureElement = () => {
     return (
         <div>
-            <p>qqqqqqq</p>
+
         </div>
     );
 };
 
-export default AddBook;
+export default FurnitureElement;

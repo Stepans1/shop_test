@@ -1,0 +1,41 @@
+{
+  "$id": "1",
+  "AutoRefresh": true,
+  "AutoRefreshRemotes": true,
+  "CommitTextLinks": null,
+  "DraftCommitMsg": "fix",
+  "IncomingSavedCount": 11,
+  "LastCheckedRemotes": "2023-06-19T14:11:10.1577074+03:00",
+  "LastUsedView": 1,
+  "LogBranchFilterIndex": 0,
+  "OutgoingSavedCount": 0,
+  "SidebarExpandedItems": [
+    "Состояния файлов",
+    "Ветки",
+    "Состояния файлов",
+    "Ветки",
+    "Состояния файлов",
+    "Ветки",
+    "Состояния файлов",
+    "Ветки",
+    "Ветки"
+  ],
+  "SidebarWidth": 210.0,
+  "SubtreeLinks": [],
+  "NeedsLargeFilesPull": false,
+  "RemoteProjectLinks": [
+    {
+      "$id": "2",
+      "BaseUrl": "https://bitbucket.org/",
+      "Identifier": "sosipov1/test_task",
+      "RemoteName": "origin",
+      "Type": 1,
+      "Username": null,
+      "CloneUrl": "https://sosipov1-admin@bitbucket.org/sosipov1/test_task.git",
+      "ProjectUrl": null,
+      "AccountId": null,
+      "AvatarUrl": null,
+      "DisplayName": "origin: https://bitbucket.org/"
+    }
+  ]
+}
