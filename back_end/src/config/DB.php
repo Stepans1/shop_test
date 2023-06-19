@@ -1,7 +1,7 @@
 <?php
 
 namespace App\config;
-
+//class with connection to database
  class DB
 {
      private string $servername = 'localhost';

@@ -1,6 +1,6 @@
 <?php
 
-//declare(strict_types=1);
+
 
 namespace App\Controllers;
 
@@ -27,8 +27,7 @@ class ProductController extends AbstractController
    public function addProduct()
    {
        $data= $this->reqest();
-//       $request_body = file_get_contents('php://input');
-//       $data = json_decode($request_body, true);
+
        $addProduct=new Functions();
        $addProduct->addProduct($data);
    }

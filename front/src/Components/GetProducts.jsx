@@ -11,7 +11,7 @@ const GetProducts = function () {
     const {loading} = useContext(Loading);
     const [products, setProducts] = useState([]);
     function selectProducts(){
-        axios.get('http://localhost/sand_box/public/')
+        axios.get('http://localhost/FINALA/back_end/public/')
             .then(response => {
                 setProducts(response.data);
             });
@@ -24,7 +24,7 @@ const GetProducts = function () {
 // delete selected element(mass delete)
     const [ids, setIds] = useState([]);
     function deleteProducts() {
-        axios.post(`http://localhost/sand_box/public/delete` ,ids)
+        axios.post(`http://localhost/FINALA/back_end/public/delete` ,ids)
             .then(response => {
 
                setIds([]);

@@ -3,25 +3,25 @@ import React, {useEffect, useState} from 'react';
 const DvdElement = ({setValue}) => {
     const [error, setError] = useState();
 
+    //chek data from input
     const validate = (v) => {
         const pattern = /^(0|[1-9]\d*)(\.\d+)?$/;
 
         if(pattern.test(v)) {
             setError();
-            setValue("Weight: " + v + "KG");
+            setValue("Size: " + v + " MB");
         } else {
             setError("Please, provide the data of indicated type");
-            setValue('error');
+            setValue("");
         }
     }
     return (
         <div>
-            <label>Weight (KG)</label>
+            <label>Size (MB)</label>
             <input
-                id="weight"
-                placeholder='Weight'
+                id="size"
+                placeholder='Please, provide size'
                 onChange={(e) => validate(e.target.value)}
-
             />
             <div >
                 {error && <p>{error}</p>}

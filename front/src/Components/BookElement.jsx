@@ -6,39 +6,24 @@ const BookElement = ({setValue } ) => {
 
     const [error, setError] = useState();
 
-    const {
-        register,
-        watch,
-        formState:{errors,isValid},
-        handleSubmit,
-        getValues,
-
-        value
-    }=useForm({
-        mode:"onBlur",
-        defaultValues: {
-            productType: ""
-        }
-    });
+    //chek data from input
     const validate = (v) => {
         const pattern = /^(0|[1-9]\d*)(\.\d+)?$/;
 
         if(pattern.test(v)) {
-            setError();
+             setError();
             setValue("Weight: " + v + "KG");
         } else {
             setError("Please, provide the data of indicated type");
-            setValue('error');
+           setValue("");
         }
 
     }
 
     return (
         <div>
-                        <label>Weight  </label>
-
+                        <label>Weight  (KG)</label>
                         <input
-
                             id='weight'
                              onChange={(e) => validate(e.target.value)}
                             placeholder="Please, provide weight"

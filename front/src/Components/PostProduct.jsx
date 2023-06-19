@@ -15,10 +15,9 @@ import FurnitureElement from "./FurnitureElement";
 
 
  const PostProduct = () => {
-     const [type, setType] = useState();
+
      const {setLoading} = useContext(Loading);
      const [extraFields, setExtraFields] = useState();
-     const [components, setComponents] = useState();
      const [SpecialField, setSpecialField] = useState();
 
 
@@ -47,11 +46,10 @@ import FurnitureElement from "./FurnitureElement";
          setValue("specialField", SpecialField);
      }, [SpecialField])
 
-//check exist sku
+        //check exist sku
          const [skuL,setSku]=useState([]);
-
          function getSkuList(){
-             axios.get(`http://localhost/new_back/back-end/public/sku`)
+             axios.get(`http://localhost/FINALA/back_end/public/sku`)
                  .then(response => {
                      setSku(response.data);
                  });
@@ -72,7 +70,7 @@ import FurnitureElement from "./FurnitureElement";
 
         } else {
             setLoading(true);
-            axios.post(`http://localhost/new_back/back-end/public/add`, data)
+            axios.post(`http://localhost/FINALA/back_end/public/add`, data)
                 .then(() => {
                     setLoading(false);
                 });
@@ -126,7 +124,6 @@ import FurnitureElement from "./FurnitureElement";
                      <input
                          {...register("name", {
                              required: "Please, submit required data",
-
                          })}
                          id='name'
                          type="text"
@@ -156,29 +153,10 @@ import FurnitureElement from "./FurnitureElement";
                  </div>
 
                  <label>Type Switcher </label>
-                 {/*<Select*/}
-                 {/*    {...register("productType", {*/}
-                 {/*        required: "Please, submit required data",*/}
-                 {/*    })}*/}
-                 {/*    id='productType'*/}
-                 {/*    value={watch('productType')}*/}
-                 {/*    defaultValue="Type Switcher"*/}
-                 {/*    options={[*/}
-                 {/*        {value: 'BookElement', name: 'BookElement'},*/}
-                 {/*        {value: 'DVD', name: 'DVD'},*/}
-                 {/*        {value: 'Furniture', name: 'Furniture'}*/}
-                 {/*    ]}*/}
 
-                 {/*/>*/}
 
                  <select
-
                         defaultValue={""}
-
-                      // onChange={e => setType(e.target.value)}
-                     // onClick={console.log(getValues(type))}
-                     // onChange={setType(getValues('productType'))}
-                     // onChange={handleSubmit}
                       id="productType"
                       {...register("productType", { required:true })}
                         onChange={(e) => {
@@ -191,7 +169,6 @@ import FurnitureElement from "./FurnitureElement";
                             let Component = components[e.target.value];
                             setExtraFields(<Component setValue={setSpecialField} />);
                         }}
-
                  >
                      <option value="" disabled>Type Switcher</option>
                      <option  value="Book" id="Book" >Book</option>
@@ -200,112 +177,9 @@ import FurnitureElement from "./FurnitureElement";
                  </select>
                  <input
                      type="text"
-                     // style={{display:"none"}}
-
-                     {...register('specialField', {required: 'loh',
-                     pattern:{
-                         value:/error/}})}/>
-
-
+                      style={{display:"none"}}
+                     {...register('specialField', {required: true})}/>
                  {extraFields}
-
-
-
-
-                 {/*{*/}
-                 {/*    watch('productType')==='BookElement'?(*/}
-                 {/*        <div>*/}
-                 {/*            <label>Weight </label>*/}
-                 {/*            <input*/}
-                 {/*                {...register("weight", {*/}
-                 {/*                    required: "Please, submit required data",*/}
-                 {/*                    pattern: {*/}
-                 {/*                        value: /^(0|[1-9]\d*)(\.\d+)?$/,*/}
-                 {/*                        message: 'Please, provide the data of indicated type'*/}
-                 {/*                    }*/}
-                 {/*                })}*/}
-                 {/*                id='weight'*/}
-
-                 {/*                placeholder="Please, provide weight"*/}
-                 {/*            />*/}
-                 {/*            <div>*/}
-                 {/*                {errors?.weight && <p> {errors?.weight?.message || "Error!"} </p>}*/}
-                 {/*            </div>*/}
-                 {/*        </div>*/}
-
-                 {/*    // ) : watch('productType') === 'DVD' ? (*/}
-                 {/*    //     <div>*/}
-                 {/*    //         <label>Size </label>*/}
-                 {/*    //         <input*/}
-                 {/*    //             {...register("size", {*/}
-                 {/*    //                 required: true,*/}
-                 {/*    //                 pattern: {*/}
-                 {/*    //                     value: /^(0|[1-9]\d*)(\.\d+)?$/,*/}
-                 {/*    //                     message: 'Please, provide the data of indicated type'*/}
-                 {/*    //                 }*/}
-                 {/*    //             })}*/}
-                 {/*    //             id='size'*/}
-                 {/*    //*/}
-                 {/*    //             placeholder="Please, provide size"*/}
-                 {/*    //         />*/}
-                 {/*    //         <div>*/}
-                 {/*    //             {errors?.size && <p> {errors?.size?.message || "Please, submit required data"} </p>}*/}
-                 {/*    //         </div>*/}
-                 {/*    //     </div>*/}
-                 {/*    // ) : watch('productType') === 'Furniture' ? (*/}
-                 {/*    //     <p>*/}
-                 {/*    //         <label>Height (CM)&nbsp;</label>*/}
-                 {/*    //         <input*/}
-                 {/*    //             {...register("height", {*/}
-                 {/*    //                 required: "Please, submit required data",*/}
-                 {/*    //                 pattern: {*/}
-                 {/*    //                     value: /^(0|[1-9]\d*)(\.\d+)?$/,*/}
-                 {/*    //                     message: 'Please, provide the data of indicated type'*/}
-                 {/*    //                 }*/}
-                 {/*    //             })}*/}
-                 {/*    //             id='height'*/}
-                 {/*    //*/}
-                 {/*    //             placeholder="Please, provide height"*/}
-                 {/*    //         />*/}
-                 {/*    //         <div>*/}
-                 {/*    //         {errors?.height && <p> {errors?.height?.message || "Error!"} </p>}*/}
-                 {/*    //         </div><br/>*/}
-                 {/*    //         <label>Width (CM)&nbsp;&nbsp;</label>*/}
-                 {/*    //         <input*/}
-                 {/*    //             {...register("width", {*/}
-                 {/*    //                 required: "Please, submit required data",*/}
-                 {/*    //                 pattern: {*/}
-                 {/*    //                     value: /^(0|[1-9]\d*)(\.\d+)?$/,*/}
-                 {/*    //                     message: 'Please, provide the data of indicated type'*/}
-                 {/*    //                 }*/}
-                 {/*    //             })}*/}
-                 {/*    //             id='width'*/}
-                 {/*    //*/}
-                 {/*    //             placeholder="Please, provide width"*/}
-                 {/*    //         />*/}
-                 {/*    //         <div>*/}
-                 {/*    //         {errors?.width && <p> {errors?.width?.message || "Error!"} </p>}*/}
-                 {/*    //         </div><br/>*/}
-                 {/*    //         <label>Length (CM)&nbsp;</label>*/}
-                 {/*    //         <input*/}
-                 {/*    //             {...register("length", {*/}
-                 {/*    //                 required: "Please, submit required data",*/}
-                 {/*    //                 pattern: {*/}
-                 {/*    //                     value: /^(0|[1-9]\d*)(\.\d+)?$/,*/}
-                 {/*    //                     message: 'Please, provide the data of indicated type'*/}
-                 {/*    //                 }*/}
-                 {/*    //             })}*/}
-                 {/*    //             id='length'*/}
-                 {/*    //*/}
-                 {/*    //             placeholder="Please, provide length"*/}
-                 {/*    //         />*/}
-                 {/*    //         <div>*/}
-                 {/*    //             {errors?.length && <p> {errors?.length?.message || "Error!"} </p>}*/}
-                 {/*    //         </div>*/}
-                 {/*    //     </p>*/}
-                 {/*    ) : (<p></p>)*/}
-                 {/*}*/}
-
              </div>
          </form>
 

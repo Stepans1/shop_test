@@ -8,7 +8,7 @@ class Functions extends DB
     private $products = [];
     public function __construct()
     {
-        $sql = "SELECT id, sku, name, CONCAT(price, ' $') AS price, productType, specialField FROM products";
+        $sql = "SELECT id, sku, name, CONCAT(price, ' $') AS price, productType, specialField FROM products order by productType";
 
 
         $result = $this->mysqli()->query($sql);
