@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Controllers\AttributeController;
 use App\core\Router;
 use App\Controllers\ProductController;
 class Application
@@ -12,9 +13,12 @@ class Application
         $router = new Router();
 
         $router
+            ->get('/product/get', [ProductController::class, 'findBySku'])
             ->get('/', [ProductController::class, 'getAllProduct'])
             ->get('/sku', [ProductController::class, 'getAllSku'])
-            ->post('/add', [ProductController::class, 'addProduct'])
+            ->get('/type', [AttributeController::class, 'getType'])
+            ->get('/attribute', [AttributeController::class, 'getAttribute'])
+            ->post('/product/saveApi', [ProductController::class, 'addProduct'])
             ->post('/delete', [ProductController::class, 'deleteProd'])
         ;
 

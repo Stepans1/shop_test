@@ -11,7 +11,7 @@ const GetProducts = function () {
     const {loading} = useContext(Loading);
     const [products, setProducts] = useState([]);
     function selectProducts(){
-        axios.get('http://188.92.78.91:8080/')
+        axios.get('http://localhost/FINALA/back-end/public/')
             .then(response => {
                 setProducts(response.data);
             });
@@ -24,7 +24,7 @@ const GetProducts = function () {
 // delete selected element(mass delete)
     const [ids, setIds] = useState([]);
     function deleteProducts() {
-        axios.post(`http://188.92.78.91:8080/delete` ,ids)
+        axios.post(`http://localhost/FINALA/back-end/public/delete` ,ids)
             .then(response => {
 
                setIds([]);

@@ -6,184 +6,183 @@ import {Link, useNavigate} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {useContext} from "react";
 import {Loading} from "../context";
-import BookElement from "./BookElement";
-import DvdElement from "./DvdElement";
-import FurnitureElement from "./FurnitureElement";
 
 
 
 
 
- const PostProduct = () => {
 
-     const {setLoading} = useContext(Loading);
-     const [extraFields, setExtraFields] = useState();
-     const [SpecialField, setSpecialField] = useState();
+const PostProduct = () => {
 
+    const {setLoading} = useContext(Loading);
 
-     const {
-             register,
-             watch,
-             formState:{errors,isValid},
-             handleSubmit,
-             getValues,
-             setValue,
-             value
-         }=useForm({
-             mode:"onBlur",
-             defaultValues: {
-                 productType: ""
-             }
-         });
-         const onSubmit = (data)=>
-         {
-             postProducts(data);
-         };
+    const [type,setType]=useState([]);
 
+    const [product, setProduct] = useState({sku: '', name: '', price: '', productType: ''})
+    const [error, setError] = useState();
+    const [attribute, setAttribute] = useState();
 
+    const {
 
-     useEffect(() => {
-         setValue("specialField", SpecialField);
-     }, [SpecialField])
+        formState:{errors,isValid},
+        handleSubmit,
 
-        //check exist sku
-         const [skuL,setSku]=useState([]);
-         function getSkuList(){
-             axios.get(`http://188.92.78.91:8080/sku`)
-                 .then(response => {
-                     setSku(response.data);
-                 });
-         }
-
-         useEffect(()=>{
-             getSkuList();
-         }, []);
-     function skuValidation(sku) {
-         return skuL.includes(sku);
-     }
-     const navigate = useNavigate();
-    //add product
-     async function postProducts(data) {
-        await getSkuList();
-        if(skuValidation(data.sku) === true){
-         
-
-        } else {
-            setLoading(true);
-            axios.post(`http://188.92.78.91:8080/add`, data)
-                .then(() => {
-                    setLoading(false);
-                });
-            navigate("/");
+    }=useForm({
+        mode:"onBlur",
+        defaultValues: {
+            productType: ""
         }
+    });
+
+
+    useEffect(() => {
+        if(product.productType)
+            fetchFields(product.productType);
+
+    }, [product.productType]);
+    const fetchFields = (type) => {
+        axios.get( `http://localhost/FINALA/back-end/public/attribute?type=`+ type)
+            .then(response => {
+
+                 setAttribute(response.data);
+            })
+    }
 
 
 
-     }
 
 
-     return (
+    function getType(){
+        axios.get(`http://localhost/FINALA/back-end/public/type`)
+            .then(response => {
 
-         <form id="product_form" onSubmit={handleSubmit(onSubmit)}>
+            setType(response.data);
 
-             <div>
-                 <header>
-                     <h1>Product Add</h1>
-                     <div className={classes.buttons}>
-                         <button onClick={skuValidation}  type="submit" >Save</button>
-                         &nbsp;&nbsp;&nbsp;
-                         <button><Link to='/'>Cancel</Link></button>
-
-                     </div>
-                     <hr/>
-                 </header>
-                 <br/>
-                 <br/>
-                 <div>
-                     <label>SKU </label>
-                     <input
-                         {...register("sku", {
-                             required: "Please, submit required data",
-                             validate:(v)=>{
-                                 if(skuValidation(v)===true){
-                                    return "Sku must be unique ";
-                                 }
-                             }
-
-                         })}
-                         id='sku'
-                         type="text"
-                         placeholder="sku"/>
-                     <br/><br/>
-                     <div>
-                         {errors?.sku && <p> {errors?.sku?.message || "Error!"} </p>}
-                     </div>
-                 </div>
-                 <div>
-                     <label>Name </label>
-                     <input
-                         {...register("name", {
-                             required: "Please, submit required data",
-                         })}
-                         id='name'
-                         type="text"
-                         placeholder="name"
-                     /><br/><br/>
-                     <div>
-                         {errors?.name && <p> {errors?.name?.message || "Error!"} </p>}
-                     </div>
-                 </div>
-                 <div>
-                     <label>Price </label>
-                     <input
-                         {...register("price", {
-                             required: "Please, submit required data",
-                             pattern: {
-                                 value: /^(0|[1-9]\d*)(\.\d+)?$/,
-                                 message: 'Please, provide the data of indicated type'
-                             }
-                         })}
-
-                         id='price'
-                         placeholder="price"
-                     /> <br/><br/>
-                     <div>
-                         {errors?.price && <p> {errors?.price?.message || "Error!"} </p>}
-                     </div>
-                 </div>
-
-                 <label>Type Switcher </label>
+            });
 
 
-                 <select
-                        defaultValue={""}
-                      id="productType"
-                      {...register("productType", { required:true })}
-                        onChange={(e) => {
-                            setSpecialField(null);
-                            const components = {
-                                "Book": BookElement ,
-                                "DVD": DvdElement,
-                                "Furniture": FurnitureElement
-                            }
-                            let Component = components[e.target.value];
-                            setExtraFields(<Component setValue={setSpecialField} />);
-                        }}
-                 >
-                     <option value="" disabled>Type Switcher</option>
-                     <option  value="Book" id="Book" >Book</option>
-                     <option value="DVD" id="DVD" >DVD</option>
-                     <option value="Furniture" id="Furniture" >Furniture</option>
-                 </select>
-                 <input
-                     type="text"
-                      style={{display:"none"}}
-                     {...register('specialField', {required: true})}/>
-                 {extraFields}
-             </div>
-         </form>
+    }
+    useEffect(()=>{
+        getType();
 
-     );
- };
+    }, []);
+
+    const navigate = useNavigate();
+    //add product
+    function addProduct(e) {
+
+        axios.post( 'http://localhost/FINALA/back-end/public/product/saveApi',product)
+            .then(response => {
+
+                if(response.data ==="ok") {
+                    navigate('/');
+                } else {
+                    setError(response.data);
+
+                }
+            });
+    }
+
+    return (
+
+        <form id="product_form" onSubmit={handleSubmit(addProduct)}>
+
+            <div>
+
+                <header>
+                    <h1>Product Add</h1>
+                    <div className={classes.buttons}>
+                        <button   type="submit" >Save</button>
+                        &nbsp;&nbsp;&nbsp;
+                        <button><Link to='/'>Cancel</Link></button>
+
+                    </div>
+                    <hr/>
+                </header>
+                <br/>
+                <br/>
+                <div>
+                    {error
+                        ?
+                        <h3 style={{color:"red"}} >{error}</h3>
+                        :
+                        <p></p>
+                    }
+                    <div>
+                        <label>SKU</label>
+                        <input
+                            id="sku"
+                            placeholder='SKU'
+                            onChange={e => setProduct({...product, sku: e.target.value})}
+                        />
+                    </div>
+
+                    <div>
+                        <label>Name</label>
+                        <input
+                            id="name"
+                            placeholder='Name'
+                            onChange={e => setProduct({...product, name: e.target.value})}
+                        />
+                    </div>
+
+                    <div>
+                        <label>Price ($)</label>
+                        <input
+                            id="price"
+                            placeholder='Price'
+                            onChange={e => setProduct({...product, price: e.target.value})}
+                        />
+                    </div>
+                </div>
+
+                <label>Type Switcher </label>
+
+
+                <select
+                    // defaultValue={""}
+                    id="productType"
+                    value={product.productType}
+                    onChange={(e) => {
+
+                        setProduct({
+                            sku: product.sku,
+                            name: product.name,
+                            price: product.price,
+                            productType: e.target.value
+                        });
+
+                    }}
+                >
+                    <option value="" disabled>Type Switcher</option>
+                    {type.length ?
+                        type.map((t) =>
+                            <option key={t.type} value={t.type} id={t.type}>{t.type}</option>
+                        )
+                        :
+                        <option>Empty type</option>
+                    }
+                </select>
+
+            </div>
+            <div>     {attribute ?
+                Object.keys(attribute['fields']).map(index =>
+                    <div key={attribute['fields'][index][0]}>
+                        <label>{attribute['fields'][index][0].toUpperCase()+ attribute['fields'][index].slice(1) } {attribute['$unit']} </label>
+                        <input
+                            id={attribute['fields'][index]}
+                            placeholder={attribute['fields'][index][0].toUpperCase()+ attribute['fields'][index].slice(1)}
+                            onChange={e => setProduct({...product, [attribute['fields'][index]]: e.target.value})}
+                        />
+                    </div>
+                )
+                :
+                <p></p>
+            }
+            </div>
+        </form>
+
+    );
+};
 
 export default PostProduct;

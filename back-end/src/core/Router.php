@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\core;
 
-use App\Exceptions\RouteNotFoundException;
+
 
 class Router
 {
@@ -36,6 +36,7 @@ class Router
     {
         $route = explode('?', $requestUri)[0];
         $action = $this->routes[$requestMethod][$route] ;
+
 
         if (!$action) {
 //            throw new RouteNotFoundException();
